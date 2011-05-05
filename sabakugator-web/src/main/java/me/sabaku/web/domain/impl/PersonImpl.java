@@ -6,9 +6,19 @@ import me.sabaku.api.Concept;
 import me.sabaku.api.Person;
 
 public class PersonImpl implements Person {
+	private String id;
 	private String firstName;
 	private String lastName;
 	private Collection<Concept> conceptsOfInterest;
+	
+	@Override
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	@Override
 	public String getFirstName() {

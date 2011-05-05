@@ -12,13 +12,25 @@ public class ConceptImpl implements Concept {
 		return id;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	@Override
 	public String getLabel() {
 		return label;
 	}
 
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
 	@Override
 	public String getUrl() {
 		return url;
+	}
+	
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }
