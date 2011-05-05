@@ -15,6 +15,7 @@
 	
 	<properties>
 		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<javax.servlet.version>2.5</javax.servlet.version>
 		<com.google.code.gson.version>1.7.1</com.google.code.gson.version>
 	</properties>
 	
@@ -33,6 +34,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
