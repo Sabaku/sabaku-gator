@@ -1,5 +1,10 @@
 package me.sabaku.api;
 
-public interface Publication {
+import java.util.Collection;
 
+public interface Publication {
+	String getId();
+	String getTitle();
+	String getAbstract();
+	Collection<Person> getAuthors();
 }

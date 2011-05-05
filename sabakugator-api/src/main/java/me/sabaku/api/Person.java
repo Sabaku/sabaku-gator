@@ -1,5 +1,9 @@
 package me.sabaku.api;
 
-public interface Person {
+import java.util.Collection;
 
+public interface Person {
+	String getFirstName();
+	String getLastName();
+	Collection<Concept> getConceptsOfInterest();
 }
