@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>me.sabaku</groupId>
+	<artifactId>sabakugator-web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
+	<parent>
+		<groupId>me.sabaku</groupId>
+		<artifactId>sabakugator</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<com.google.code.gson.version>1.7.1</com.google.code.gson.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${com.google.code.gson.version}</version>
+		</dependency>
+	</dependencies>
+</project>
