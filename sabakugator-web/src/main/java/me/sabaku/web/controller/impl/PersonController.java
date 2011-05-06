@@ -26,13 +26,19 @@ public class PersonController {
 	@Qualifier("wikiPeoplePersonServiceImpl")
 	PersonService personService;
 	
-	@RequestMapping("/getPerson")
-	public void getPerson(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
+	@RequestMapping("/searchPerson")
+	public void searchPerson(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
 		DateTime start = new DateTime();
 		
-		Collection<Person> persons = personService.getPerson(name);
+		Collection<Person> persons = personService.searchPerson(name);
 		response.getWriter().print(serializer.serialize(persons));
 		
 		logger.info("Query for '{}' took {}ms", name, new Interval(start, new DateTime()).toDurationMillis());
+	}
+	
+	@RequestMapping("/getPerson")
+	public void getPerson(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
+		Person person = personService.getPerson(id);
+		response.getWriter().print(serializer.serialize(person));
 	}
 }
