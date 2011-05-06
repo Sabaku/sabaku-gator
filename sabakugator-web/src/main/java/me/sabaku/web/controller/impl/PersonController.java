@@ -23,7 +23,7 @@ public class PersonController {
 	@Autowired
 	JsonSerializer serializer;
 	@Autowired
-	@Qualifier("wikiPeoplePersonServiceImpl")
+	@Qualifier("mockPersonServiceImpl")
 	PersonService personService;
 	
 	@RequestMapping("/searchPerson")
@@ -38,7 +38,13 @@ public class PersonController {
 	
 	@RequestMapping("/getPerson")
 	public void getPerson(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
+		DateTime start = new DateTime();
+		
 		Person person = personService.getPerson(id);
-		response.getWriter().print(serializer.serialize(person));
+		String json = serializer.serialize(person);
+		logger.info("json for person is: {}", json);
+		response.getWriter().print(json);
+		
+		logger.info("Query for '{}' took {}ms", id, new Interval(start, new DateTime()).toDurationMillis());
 	}
 }

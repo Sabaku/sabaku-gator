@@ -6,6 +6,7 @@ import me.sabaku.api.Person;
 import me.sabaku.api.Publication;
 
 public class PublicationImpl implements Publication {
+	private static final long serialVersionUID = -4284204277340165126L;
 	private String id;
 	private String title;
 	private String abstractText;

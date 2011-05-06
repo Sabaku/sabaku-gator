@@ -1,8 +1,9 @@
 package me.sabaku.api;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface Publication {
+public interface Publication extends Serializable {
 	String getId();
 	String getTitle();
 	String getAbstract();

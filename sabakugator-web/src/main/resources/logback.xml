@@ -17,4 +17,5 @@
 		<appender-ref ref="CONSOLE"/>
 	</root>
 	<logger name="org.springframework" level="WARN"/>
+	<logger name="com.hp.hpl.jena" level="WARN"/>
 </configuration>

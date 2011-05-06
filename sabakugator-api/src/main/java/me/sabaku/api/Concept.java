@@ -1,6 +1,8 @@
 package me.sabaku.api;
 
-public interface Concept {
+import java.io.Serializable;
+
+public interface Concept extends Serializable {
 	String getId();
 	String getLabel();
 	String getUrl();

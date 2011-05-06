@@ -6,6 +6,7 @@ import me.sabaku.api.Concept;
 import me.sabaku.api.Person;
 
 public class PersonImpl implements Person {
+	private static final long serialVersionUID = 2694615840539141875L;
 	private String id;
 	private String firstName;
 	private String lastName;
