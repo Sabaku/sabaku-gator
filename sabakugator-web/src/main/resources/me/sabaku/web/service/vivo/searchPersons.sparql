@@ -1,0 +1,6 @@
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+select * where {
+  ?uri foaf:firstName "%s" .
+  ?uri foaf:lastName "%s" .
+}

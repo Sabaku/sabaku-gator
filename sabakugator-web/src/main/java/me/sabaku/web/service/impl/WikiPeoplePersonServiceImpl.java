@@ -55,11 +55,11 @@ public class WikiPeoplePersonServiceImpl implements PersonService {
 	}
 	
 	@Override
-	public Collection<Person> searchPerson(String name) {
+	public Collection<Person> searchPerson(String firstName, String lastName) {
 		List<Person> persons = new ArrayList<Person>();
 		try {
 			Document dom = documentBuilder.parse(String.format(WIKIPEOPLE_SEARCH_URL,
-					encode(name, URLENCODE_ENCODING)));
+					encode(firstName + " " + lastName, URLENCODE_ENCODING)));
 			
 			NodeList results = (NodeList)xpathSearchResultQuery.evaluate(dom, XPathConstants.NODESET);
 			for (int i = 0; i < results.getLength(); i++) {

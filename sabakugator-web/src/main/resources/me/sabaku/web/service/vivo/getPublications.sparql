@@ -1,0 +1,8 @@
+prefix vivo: <http://vivoweb.org/ontology/core#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select * where { 
+  ?authorship vivo:linkedAuthor <%s> .
+  ?authorship vivo:linkedInformationResource ?paper .
+  ?paper rdfs:label ?title .
+}

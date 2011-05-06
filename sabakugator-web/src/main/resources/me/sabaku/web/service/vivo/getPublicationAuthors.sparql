@@ -1,0 +1,6 @@
+prefix vivo: <http://vivoweb.org/ontology/core#>
+
+select ?person where {
+  ?authorship vivo:linkedInformationResource <%s> .
+  ?authorship vivo:linkedAuthor ?person .
+}

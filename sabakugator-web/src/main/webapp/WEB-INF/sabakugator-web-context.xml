@@ -5,6 +5,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 		default-init-method="init">
 	
-	<context:component-scan base-package="me.sabaku.web"/>
 	<context:property-placeholder location="classpath:/me/sabaku/web/sabakugator.properties"/>
+	<context:component-scan base-package="me.sabaku.web"/>
 </beans>

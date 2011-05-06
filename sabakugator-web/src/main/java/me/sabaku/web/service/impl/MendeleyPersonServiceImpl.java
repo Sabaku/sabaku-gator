@@ -13,7 +13,7 @@ public class MendeleyPersonServiceImpl implements PersonService {
 		"http://www.bigcat.unimaas.nl/~andra/sabaku/Mendeley.php?query=%s";
 	
 	@Override
-	public Collection<Person> searchPerson(String name) {
+	public Collection<Person> searchPerson(String firstName, String lastName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

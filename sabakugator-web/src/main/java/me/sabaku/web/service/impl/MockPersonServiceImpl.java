@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class MockPersonServiceImpl implements PersonService {
 	
 	@Override
-	public Collection<Person> searchPerson(String name) {
+	public Collection<Person> searchPerson(String firstName, String lastName) {
 		List<Person> persons = new ArrayList<Person>();
 		
 		PersonImpl p1 = new PersonImpl();

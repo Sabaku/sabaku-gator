@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import me.sabaku.api.Person;
 import me.sabaku.web.domain.impl.PersonImpl;
-import me.sabaku.web.service.PersonService;
+import me.sabaku.web.service.impl.VivoPersonServiceImpl;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -22,21 +22,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PersonController {
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 	@Autowired
-	JsonSerializer serializer;
+	private JsonSerializer serializer;
 	@Autowired
-	@Qualifier("mockPersonServiceImpl")
-	PersonService personService;
+	@Qualifier("vivoPersonServiceImpl")
+	private VivoPersonServiceImpl personService;
 	
 	@RequestMapping("/searchPerson")
-	public void searchPerson(@RequestParam("name") String name, HttpServletResponse response) throws Exception {
-		DateTime start = new DateTime();
-		
-		Collection<Person> persons = personService.searchPerson(name);
+	public void searchPerson(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, 
+			HttpServletResponse response) throws Exception {
+		Collection<Person> persons = personService.searchPerson(firstName, lastName);
 		
 		response.setContentType("application/json");
 		response.getWriter().print(String.format("callback(%s)", serializer.serialize(persons)));
-		
-		logger.info("Query for '{}' took {}ms", name, new Interval(start, new DateTime()).toDurationMillis());
 	}
 	
 	@RequestMapping("/getPerson")
