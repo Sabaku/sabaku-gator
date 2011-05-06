@@ -4,18 +4,19 @@ import me.sabaku.web.controller.Serializer;
 
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-
 @Service
 public class JsonSerializer implements Serializer {
-	private Gson gson;
+	//private Gson gson;
+	private flexjson.JSONSerializer serializer;
 	
 	public void init() {
-		gson = new Gson();
+		//gson = new Gson();
+		serializer = new flexjson.JSONSerializer().exclude("*.class");
 	}
 	
 	@Override
 	public String serialize(Object object) {
-		return gson.toJson(object);
+		//return gson.toJson(object);
+		return serializer.deepSerialize(object);
 	}
 }

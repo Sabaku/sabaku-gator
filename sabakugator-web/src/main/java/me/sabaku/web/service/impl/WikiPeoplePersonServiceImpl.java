@@ -15,14 +15,12 @@ import javax.xml.xpath.XPathFactory;
 
 import me.sabaku.api.Concept;
 import me.sabaku.api.Person;
-import me.sabaku.web.controller.impl.JsonSerializer;
 import me.sabaku.web.domain.impl.ConceptImpl;
 import me.sabaku.web.domain.impl.PersonImpl;
 import me.sabaku.web.service.PersonService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -46,10 +44,6 @@ public class WikiPeoplePersonServiceImpl implements PersonService {
 	private XPathExpression xpathFirstNameQuery;
 	private XPathExpression xpathLastNameQuery;
 	private XPathExpression xpathCoiQuery;
-	
-	// testing purposes
-	@Autowired
-	JsonSerializer serializer;
 	
 	public void init() throws Exception {
 		documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
