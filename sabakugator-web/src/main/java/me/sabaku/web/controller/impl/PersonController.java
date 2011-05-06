@@ -34,7 +34,7 @@ public class PersonController {
 		Collection<Person> persons = personService.searchPerson(name);
 		
 		response.setContentType("application/json");
-		response.getWriter().print(serializer.serialize(persons));
+		response.getWriter().print(String.format("callback(%s)", serializer.serialize(persons)));
 		
 		logger.info("Query for '{}' took {}ms", name, new Interval(start, new DateTime()).toDurationMillis());
 	}
@@ -46,7 +46,7 @@ public class PersonController {
 		PersonImpl person = (PersonImpl)personService.getPerson(id);
 		
 		response.setContentType("application/json");
-		response.getWriter().print(serializer.serialize(person));
+		response.getWriter().print(String.format("callback(%s)", serializer.serialize(person)));
 		
 		logger.info("Query for '{}' took {}ms", id, new Interval(start, new DateTime()).toDurationMillis());
 	}
