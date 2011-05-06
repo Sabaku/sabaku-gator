@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletResponse;
 
 import me.sabaku.api.Person;
+import me.sabaku.web.domain.impl.PersonImpl;
 import me.sabaku.web.service.PersonService;
 
 import org.joda.time.DateTime;
@@ -31,6 +32,8 @@ public class PersonController {
 		DateTime start = new DateTime();
 		
 		Collection<Person> persons = personService.searchPerson(name);
+		
+		response.setContentType("application/json");
 		response.getWriter().print(serializer.serialize(persons));
 		
 		logger.info("Query for '{}' took {}ms", name, new Interval(start, new DateTime()).toDurationMillis());
@@ -40,10 +43,10 @@ public class PersonController {
 	public void getPerson(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
 		DateTime start = new DateTime();
 		
-		Person person = personService.getPerson(id);
-		String json = serializer.serialize(person);
-		logger.info("json for person is: {}", json);
-		response.getWriter().print(json);
+		PersonImpl person = (PersonImpl)personService.getPerson(id);
+		
+		response.setContentType("application/json");
+		response.getWriter().print(serializer.serialize(person));
 		
 		logger.info("Query for '{}' took {}ms", id, new Interval(start, new DateTime()).toDurationMillis());
 	}

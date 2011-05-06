@@ -1,5 +1,6 @@
 package me.sabaku.web.domain.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import me.sabaku.api.Concept;
