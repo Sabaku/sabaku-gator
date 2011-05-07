@@ -103,8 +103,8 @@ public class VivoPersonServiceImpl implements PersonService {
 			if (!isDuplicate) {
 				PersonImpl person = new PersonImpl();
 				person.setId(uriNode.toString());
-				person.setFirstName(firstName);
-				person.setLastName(lastName);
+				person.setFirstName(firstNameNode.toString());
+				person.setLastName(lastNameNode.toString());
 				persons.add(person);
 			}
 		}
