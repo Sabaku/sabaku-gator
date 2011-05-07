@@ -1,6 +1,15 @@
 prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select * where {
-  ?uri foaf:firstName "%s" .
-  ?uri foaf:lastName "%s" .
+select ?uri ?firstName ?lastName
+where {
+  { ?uri foaf:firstName ?firstName . 
+    ?uri foaf:lastName ?lastName .
+    FILTER regex(?firstName, "%s", "i")
+    FILTER regex(?lastName, "%s", "i") }
+  union {
+    ?uri rdfs:label ?concatName .
+    ?uri rdf:type foaf:Person .
+    FILTER regex(?concatName, "%s", "i") }
 }

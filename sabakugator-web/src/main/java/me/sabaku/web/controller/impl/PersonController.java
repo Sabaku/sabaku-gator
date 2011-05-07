@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import me.sabaku.api.Person;
 import me.sabaku.web.domain.impl.PersonImpl;
-import me.sabaku.web.service.impl.VivoPersonServiceImpl;
+import me.sabaku.web.service.PersonService;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -25,7 +25,7 @@ public class PersonController {
 	private JsonSerializer serializer;
 	@Autowired
 	@Qualifier("vivoPersonServiceImpl")
-	private VivoPersonServiceImpl personService;
+	private PersonService personService;
 	
 	@RequestMapping("/searchPerson")
 	public void searchPerson(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, 

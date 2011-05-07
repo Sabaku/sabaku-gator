@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import me.sabaku.api.Person;
 import me.sabaku.api.Publication;
-import me.sabaku.web.service.impl.VivoPersonServiceImpl;
-import me.sabaku.web.service.impl.VivoPublicationServiceImpl;
+import me.sabaku.web.service.PersonService;
+import me.sabaku.web.service.PublicationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,10 +21,10 @@ public class PublicationController {
 	private JsonSerializer serializer;
 	@Autowired
 	@Qualifier("vivoPublicationServiceImpl")
-	private VivoPublicationServiceImpl publicationService;
+	private PublicationService publicationService;
 	@Autowired
 	@Qualifier("vivoPersonServiceImpl")
-	private VivoPersonServiceImpl personService;
+	private PersonService personService;
 	
 	@RequestMapping("/getPublications")
 	public void getPublications(@RequestParam("id") String id, HttpServletResponse response) throws Exception {

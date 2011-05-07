@@ -5,9 +5,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
+import me.sabaku.api.Concept;
 import me.sabaku.api.Person;
+import me.sabaku.web.domain.impl.ConceptImpl;
 import me.sabaku.web.domain.impl.PersonImpl;
 import me.sabaku.web.service.PersonService;
 
@@ -36,6 +43,10 @@ public class VivoPersonServiceImpl implements PersonService {
 	private File personDetailsQueryFile;
 	private String personDetailsQuery;
 	
+	@Value("classpath:/me/sabaku/web/service/vivo/getCOI.sparql")
+	private File conceptsOfInterestQueryFile;
+	private String conceptsOfInterestQuery;
+	
 	@Value("${vivo.sparql.endpoint}")
 	private String sparqlEndpoint;
 	
@@ -44,7 +55,7 @@ public class VivoPersonServiceImpl implements PersonService {
 			BufferedReader reader = new BufferedReader(new FileReader(searchPersonQueryFile));
 			StringBuffer sb = new StringBuffer();
 			while (reader.ready()) {
-				sb.append(reader.readLine() + "\n");
+				sb.append(reader.readLine());
 			}
 			searchPersonQuery = sb.toString();
 		}
@@ -56,13 +67,22 @@ public class VivoPersonServiceImpl implements PersonService {
 			}
 			personDetailsQuery = sb.toString();
 		}
+		{
+			BufferedReader reader = new BufferedReader(new FileReader(conceptsOfInterestQueryFile));
+			StringBuffer sb = new StringBuffer();
+			while (reader.ready()) {
+				sb.append(reader.readLine());
+			}
+			conceptsOfInterestQuery = sb.toString();
+		}
 	}
 	
 	@Override
 	public Collection<Person> searchPerson(String firstName, String lastName) {
 		List<Person> persons = new ArrayList<Person>();
 		
-		Query query = QueryFactory.create(String.format(searchPersonQuery, firstName, lastName));
+		Query query = QueryFactory.create(String.format(searchPersonQuery, firstName, lastName,
+				String.format("%s, %s", lastName, firstName)));
 		QueryExecution queryExecution = QueryExecutionFactory.sparqlService(sparqlEndpoint, query);
 		ResultSet resultSet = queryExecution.execSelect();
 		
@@ -72,11 +92,21 @@ public class VivoPersonServiceImpl implements PersonService {
 			RDFNode firstNameNode = solution.get("firstName");
 			RDFNode lastNameNode = solution.get("lastName");
 			
-			PersonImpl person = new PersonImpl();
-			person.setId(uriNode.toString());
-			person.setFirstName(firstName);
-			person.setLastName(lastName);
-			persons.add(person);
+			boolean isDuplicate = false;
+			for (Person p : persons) {
+				if (p.getId() == uriNode.toString()) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			
+			if (!isDuplicate) {
+				PersonImpl person = new PersonImpl();
+				person.setId(uriNode.toString());
+				person.setFirstName(firstName);
+				person.setLastName(lastName);
+				persons.add(person);
+			}
 		}
 		
 		return persons;
@@ -87,7 +117,7 @@ public class VivoPersonServiceImpl implements PersonService {
 		PersonImpl person = new PersonImpl();
 		person.setId(id);
 		
-		Query query = QueryFactory.create(String.format(personDetailsQuery, id, id));
+		Query query = QueryFactory.create(String.format(personDetailsQuery, id, id, id));
 		QueryExecution queryExecution = QueryExecutionFactory.sparqlService(sparqlEndpoint, query);
 		ResultSet resultSet = queryExecution.execSelect();
 		
@@ -95,9 +125,19 @@ public class VivoPersonServiceImpl implements PersonService {
 			QuerySolution querySolution = resultSet.next();
 			RDFNode firstNameNode = querySolution.get("firstName");
 			RDFNode lastNameNode = querySolution.get("lastName");
+			RDFNode concatNameNode = querySolution.get("concatName");
 			
-			person.setFirstName(firstNameNode.toString());
-			person.setLastName(lastNameNode.toString());
+			if (firstNameNode == null || lastNameNode == null) {
+				String firstName = concatNameNode.toString().split(", ")[1];
+				String lastName = concatNameNode.toString().split(", ")[0];
+				
+				person.setFirstName(firstName);
+				person.setLastName(lastName);
+			} else {
+				person.setFirstName(firstNameNode.toString());
+				person.setLastName(lastNameNode.toString());
+			}
+			person.setConceptsOfInterest(getConceptsOfInterest(id));
 			
 			// break the loop after the first result
 			// TODO: sanity checks
@@ -105,5 +145,38 @@ public class VivoPersonServiceImpl implements PersonService {
 		}
 		
 		return person;
+	}
+	
+	/**
+	 * given the uri of a person, return all their concepts of interest
+	 * @param uri
+	 * @return
+	 */
+	private Collection<Concept> getConceptsOfInterest(String uri) {
+		List<Concept> cois = new ArrayList<Concept>();
+		
+		Query query = QueryFactory.create(String.format(conceptsOfInterestQuery, uri));
+		QueryExecution queryExecution = QueryExecutionFactory.sparqlService(sparqlEndpoint, query);
+		ResultSet resultSet = queryExecution.execSelect();
+		
+		Map<String,Integer> histogram = new HashMap<String,Integer>();
+		
+		while (resultSet.hasNext()) {
+			QuerySolution querySolution = resultSet.next();
+			RDFNode labelNode = querySolution.get("coi");
+			String label = labelNode.toString();
+			
+			if (!histogram.containsKey(label)) {
+				histogram.put(label, new Integer(0));
+				
+				// TODO: only return the top X COIs
+				ConceptImpl concept = new ConceptImpl();
+				concept.setLabel(label);
+				cois.add(concept);
+			}
+			histogram.put(label, histogram.get(label) + 1);
+		}
+		
+		return cois;
 	}
 }

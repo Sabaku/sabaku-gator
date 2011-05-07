@@ -1,0 +1,8 @@
+prefix vivo: <http://vivoweb.org/ontology/core#>
+
+select *
+where {
+  ?authorship vivo:linkedAuthor <%s> .
+  ?authorship vivo:linkedInformationResource ?paper .
+  ?paper vivo:freetextKeyword ?coi .
+}
