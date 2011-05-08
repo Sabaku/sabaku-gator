@@ -2,8 +2,8 @@ package me.sabaku.web.domain.impl;
 
 import java.util.Collection;
 
-import me.sabaku.api.Person;
-import me.sabaku.api.Publication;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.domain.Publication;
 
 public class PublicationImpl implements Publication {
 	private static final long serialVersionUID = -4284204277340165126L;

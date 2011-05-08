@@ -1,4 +1,4 @@
-package me.sabaku.api;
+package me.sabaku.api.domain;
 
 import java.io.Serializable;
 

@@ -3,8 +3,8 @@ package me.sabaku.web.domain.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import me.sabaku.api.Concept;
-import me.sabaku.api.Person;
+import me.sabaku.api.domain.Concept;
+import me.sabaku.api.domain.Person;
 
 public class PersonImpl implements Person {
 	private static final long serialVersionUID = 2694615840539141875L;

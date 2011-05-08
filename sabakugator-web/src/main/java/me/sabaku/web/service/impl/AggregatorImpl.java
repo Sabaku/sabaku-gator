@@ -4,10 +4,10 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Component;
 
-import me.sabaku.api.Concept;
-import me.sabaku.api.Person;
+import me.sabaku.api.domain.Concept;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.service.Aggregator;
 import me.sabaku.web.domain.impl.PersonImpl;
-import me.sabaku.web.service.Aggregator;
 
 @Component("aggregator")
 public class AggregatorImpl implements Aggregator {

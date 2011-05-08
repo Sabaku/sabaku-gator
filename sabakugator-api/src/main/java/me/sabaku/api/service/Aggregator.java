@@ -1,8 +1,8 @@
-package me.sabaku.web.service;
+package me.sabaku.api.service;
 
 import java.util.Collection;
 
-import me.sabaku.api.Person;
+import me.sabaku.api.domain.Person;
 
 /**
  * <pre>

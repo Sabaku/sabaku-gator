@@ -2,9 +2,9 @@ package me.sabaku.web.service.impl;
 
 import java.util.Collection;
 
-import me.sabaku.api.Person;
-import me.sabaku.web.service.Aggregator;
-import me.sabaku.web.service.PersonService;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.service.Aggregator;
+import me.sabaku.api.service.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

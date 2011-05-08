@@ -4,12 +4,10 @@ import java.util.Collection;
 
 import javax.servlet.http.HttpServletResponse;
 
-import me.sabaku.api.Person;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.service.PersonService;
 import me.sabaku.web.domain.impl.PersonImpl;
-import me.sabaku.web.service.PersonService;
 
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/person")
 public class PersonController {
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 	@Autowired
@@ -26,25 +25,37 @@ public class PersonController {
 	@Autowired
 	@Qualifier("vivoPersonServiceImpl")
 	private PersonService personService;
-	
-	@RequestMapping("/searchPerson")
-	public void searchPerson(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, 
+
+	@RequestMapping("/search")
+	public void searchPerson(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName,
+			@RequestParam(value="jsonp", required=false) String jsonpCallback,
 			HttpServletResponse response) throws Exception {
 		Collection<Person> persons = personService.searchPerson(firstName, lastName);
-		
+
+		String json = serializer.serialize(persons);
 		response.setContentType("application/json");
-		response.getWriter().print(String.format("callback(%s)", serializer.serialize(persons)));
+		
+		if (jsonpCallback != null) {
+			response.getWriter().print(JsonpFormatter.format(json, jsonpCallback));
+		} else {
+			response.getWriter().print(json);
+		}
 	}
-	
-	@RequestMapping("/getPerson")
-	public void getPerson(@RequestParam("id") String id, HttpServletResponse response) throws Exception {
-		DateTime start = new DateTime();
+
+	@RequestMapping("/get")
+	public void getPerson(@RequestParam("id") String id,
+			@RequestParam(value="jsonp", required=false) String jsonpCallback,
+			HttpServletResponse response) throws Exception {
+		PersonImpl person = (PersonImpl) personService.getPerson(id);
 		
-		PersonImpl person = (PersonImpl)personService.getPerson(id);
-		
+		String json = serializer.serialize(person);
 		response.setContentType("application/json");
-		response.getWriter().print(String.format("callback(%s)", serializer.serialize(person)));
 		
-		logger.info("Query for '{}' took {}ms", id, new Interval(start, new DateTime()).toDurationMillis());
+		if (jsonpCallback != null) {
+			response.getWriter().print(JsonpFormatter.format(json, jsonpCallback));
+		} else {
+			response.getWriter().print(json);
+		}
 	}
 }

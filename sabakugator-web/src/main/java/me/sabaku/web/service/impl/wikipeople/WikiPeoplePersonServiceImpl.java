@@ -1,4 +1,4 @@
-package me.sabaku.web.service.impl;
+package me.sabaku.web.service.impl.wikipeople;
 
 import static java.net.URLEncoder.encode;
 
@@ -13,11 +13,11 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
-import me.sabaku.api.Concept;
-import me.sabaku.api.Person;
+import me.sabaku.api.domain.Concept;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.service.PersonService;
 import me.sabaku.web.domain.impl.ConceptImpl;
 import me.sabaku.web.domain.impl.PersonImpl;
-import me.sabaku.web.service.PersonService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import me.sabaku.web.controller.Serializer;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class JsonSerializer implements Serializer {
 	
 	public void init() {
 		mapper = new ObjectMapper();
+		mapper.configure(SerializationConfig.Feature.WRITE_NULL_PROPERTIES, false);
 	}
 	
 	@Override

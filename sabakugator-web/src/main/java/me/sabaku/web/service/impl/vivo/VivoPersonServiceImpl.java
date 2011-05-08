@@ -1,4 +1,4 @@
-package me.sabaku.web.service.impl;
+package me.sabaku.web.service.impl.vivo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import me.sabaku.api.Concept;
-import me.sabaku.api.Person;
+import me.sabaku.api.domain.Concept;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.service.PersonService;
 import me.sabaku.web.domain.impl.ConceptImpl;
 import me.sabaku.web.domain.impl.PersonImpl;
-import me.sabaku.web.service.PersonService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

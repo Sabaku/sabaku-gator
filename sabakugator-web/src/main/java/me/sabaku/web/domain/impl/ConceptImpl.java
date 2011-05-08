@@ -1,6 +1,6 @@
 package me.sabaku.web.domain.impl;
 
-import me.sabaku.api.Concept;
+import me.sabaku.api.domain.Concept;
 
 public class ConceptImpl implements Concept {
 	private static final long serialVersionUID = 1394794858739573708L;

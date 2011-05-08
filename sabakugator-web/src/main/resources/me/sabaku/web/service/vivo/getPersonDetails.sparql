@@ -1,7 +1,8 @@
 prefix foaf: <http://xmlns.com/foaf/0.1/>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select * where {
+select ?firstName ?lastName ?concatName
+where {
   optional { <%s> foaf:firstName ?firstName . }
   optional { <%s> foaf:lastName ?lastName . }
   <%s> rdfs:label ?concatName .

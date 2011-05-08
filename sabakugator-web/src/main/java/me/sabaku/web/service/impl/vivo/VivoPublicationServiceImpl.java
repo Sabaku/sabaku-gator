@@ -1,4 +1,4 @@
-package me.sabaku.web.service.impl;
+package me.sabaku.web.service.impl.vivo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import me.sabaku.api.Person;
-import me.sabaku.api.Publication;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.domain.Publication;
+import me.sabaku.api.service.PersonService;
+import me.sabaku.api.service.PublicationService;
 import me.sabaku.web.domain.impl.PublicationImpl;
-import me.sabaku.web.service.PersonService;
-import me.sabaku.web.service.PublicationService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +68,10 @@ public class VivoPublicationServiceImpl implements PublicationService {
 	}
 	
 	@Override
-	public Collection<Publication> getPublications(Person person) {
+	public Collection<Publication> getPublications(String id) {
 		List<Publication> publications = new ArrayList<Publication>();
 		
-		Query query = QueryFactory.create(String.format(publicationsQuery, person.getId()));
+		Query query = QueryFactory.create(String.format(publicationsQuery, id));
 		QueryExecution queryExecution = QueryExecutionFactory.sparqlService(sparqlEndpoint, query);
 		ResultSet resultSet = queryExecution.execSelect();
 		
@@ -97,10 +97,10 @@ public class VivoPublicationServiceImpl implements PublicationService {
 	 * @param id
 	 * @return
 	 */
-	private Collection<Person> getAuthors(String uri) {
+	public Collection<Person> getAuthors(String id) {
 		List<Person> authors = new ArrayList<Person>();
 		
-		Query query = QueryFactory.create(String.format(authorsQuery, uri));
+		Query query = QueryFactory.create(String.format(authorsQuery, id));
 		QueryExecution queryExecution = QueryExecutionFactory.sparqlService(sparqlEndpoint, query);
 		ResultSet resultSet = queryExecution.execSelect();
 		

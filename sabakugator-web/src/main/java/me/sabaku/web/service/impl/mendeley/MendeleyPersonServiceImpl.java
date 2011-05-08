@@ -1,9 +1,9 @@
-package me.sabaku.web.service.impl;
+package me.sabaku.web.service.impl.mendeley;
 
 import java.util.Collection;
 
-import me.sabaku.api.Person;
-import me.sabaku.web.service.PersonService;
+import me.sabaku.api.domain.Person;
+import me.sabaku.api.service.PersonService;
 
 import org.springframework.stereotype.Service;
 
