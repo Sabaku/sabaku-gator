@@ -84,8 +84,6 @@ public class VivoPublicationServiceImpl implements PublicationService {
 			PublicationImpl publication = new PublicationImpl();
 			publication.setId(url.toString());
 			publication.setTitle(title.toString());
-			publication.setAuthors(getAuthors(publication.getId()));
-			
 			publications.add(publication);
 		}
 		

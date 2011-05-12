@@ -2,6 +2,7 @@ package me.sabaku.web.service.impl;
 
 import java.util.Collection;
 
+import me.sabaku.api.domain.Concept;
 import me.sabaku.api.domain.Person;
 import me.sabaku.api.service.Aggregator;
 import me.sabaku.api.service.PersonService;
@@ -38,4 +39,9 @@ public class AggregatePersonServiceImpl implements PersonService {
 		return vp;
 	}
 
+	@Override
+	public Collection<Concept> getConceptsOfInterest(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

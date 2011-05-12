@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.servlet.http.HttpServletResponse;
 
+import me.sabaku.api.domain.Concept;
 import me.sabaku.api.domain.Person;
 import me.sabaku.api.service.PersonService;
 import me.sabaku.web.domain.impl.PersonImpl;
@@ -50,6 +51,23 @@ public class PersonController {
 		PersonImpl person = (PersonImpl) personService.getPerson(id);
 		
 		String json = serializer.serialize(person);
+		response.setContentType("application/json");
+		
+		if (jsonpCallback != null) {
+			response.getWriter().print(JsonpFormatter.format(json, jsonpCallback));
+		} else {
+			response.getWriter().print(json);
+		}
+	}
+	
+	@RequestMapping("coi")
+	public void getCOI(@RequestParam("id") String id,
+			@RequestParam(value="jsonp", required=false) String jsonpCallback,
+			HttpServletResponse response) throws Exception {
+		
+		Collection<Concept> cois = personService.getConceptsOfInterest(id);
+		
+		String json = serializer.serialize(cois);
 		response.setContentType("application/json");
 		
 		if (jsonpCallback != null) {

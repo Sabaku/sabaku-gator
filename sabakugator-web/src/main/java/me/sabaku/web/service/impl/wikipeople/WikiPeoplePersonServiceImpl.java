@@ -103,6 +103,11 @@ public class WikiPeoplePersonServiceImpl implements PersonService {
 		return person;
 	}
 	
+	@Override
+	public Collection<Concept> getConceptsOfInterest(String id) {
+		return null;
+	}
+	
 	private Person getPersonDetails(String id) {
 		PersonImpl person = new PersonImpl();
 		

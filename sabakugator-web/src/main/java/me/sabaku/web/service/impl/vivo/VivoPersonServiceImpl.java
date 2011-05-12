@@ -5,12 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import me.sabaku.api.domain.Concept;
 import me.sabaku.api.domain.Person;
@@ -127,17 +124,22 @@ public class VivoPersonServiceImpl implements PersonService {
 			RDFNode lastNameNode = querySolution.get("lastName");
 			RDFNode concatNameNode = querySolution.get("concatName");
 			
-			if (firstNameNode == null || lastNameNode == null) {
-				String firstName = concatNameNode.toString().split(", ")[1];
-				String lastName = concatNameNode.toString().split(", ")[0];
+			if (firstNameNode == null || lastNameNode == null || concatNameNode == null) {
+				logger.warn("for {}, one of the names values is null", id);
+			}
+			
+			if (firstNameNode != null && lastNameNode != null) {
+				person.setFirstName(firstNameNode.toString());
+				person.setLastName(lastNameNode.toString());
+			} else {
+				String concatName = concatNameNode.toString();
+				String firstName = concatName.split(", ")[1];
+				String lastName = concatName.split(", ")[0];
 				
 				person.setFirstName(firstName);
 				person.setLastName(lastName);
-			} else {
-				person.setFirstName(firstNameNode.toString());
-				person.setLastName(lastNameNode.toString());
 			}
-			person.setConceptsOfInterest(getConceptsOfInterest(id));
+			//person.setConceptsOfInterest(getConceptsOfInterest(id));
 			
 			// break the loop after the first result
 			// TODO: sanity checks
@@ -152,7 +154,8 @@ public class VivoPersonServiceImpl implements PersonService {
 	 * @param uri
 	 * @return
 	 */
-	private Collection<Concept> getConceptsOfInterest(String uri) {
+	@Override
+	public Collection<Concept> getConceptsOfInterest(String uri) {
 		List<Concept> cois = new ArrayList<Concept>();
 		
 		Query query = QueryFactory.create(String.format(conceptsOfInterestQuery, uri));

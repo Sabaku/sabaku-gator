@@ -2,6 +2,7 @@ package me.sabaku.web.service.impl.mendeley;
 
 import java.util.Collection;
 
+import me.sabaku.api.domain.Concept;
 import me.sabaku.api.domain.Person;
 import me.sabaku.api.service.PersonService;
 
@@ -20,6 +21,12 @@ public class MendeleyPersonServiceImpl implements PersonService {
 
 	@Override
 	public Person getPerson(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Collection<Concept> getConceptsOfInterest(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

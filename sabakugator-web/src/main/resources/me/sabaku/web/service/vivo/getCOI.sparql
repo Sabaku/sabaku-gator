@@ -1,6 +1,6 @@
 prefix vivo: <http://vivoweb.org/ontology/core#>
 
-select *
+select ?coi
 where {
   ?authorship vivo:linkedAuthor <%s> .
   ?authorship vivo:linkedInformationResource ?paper .
